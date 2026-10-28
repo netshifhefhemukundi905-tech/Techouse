@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Techouse Solutions - iPhone Catalog</title>
+<style>
+*{box-sizing:border-box}body{font-family:Arial,sans-serif;margin:0;background:#f6f7f9}
+.header{background:#0a0a0a;color:#fff;padding:28px 20px;text-align:center}
+.wrap{max-width:500px;margin:0 auto;padding:16px}
+.card{background:#fff;border-radius:20px;padding:20px;margin-top:16px;box-shadow:0 8px 24px rgba(0,0,0,.06)}
+label{font-weight:800;font-size:13px;margin:14px 0 6px;display:block}
+select{width:100%;padding:14px;border-radius:12px;border:1.5px solid #ddd;font-size:16px}
+.preview{margin-top:18px;background:#e8f5e9;border:1px dashed #25D366;padding:14px;border-radius:12px}
+.btn{width:100%;padding:16px;background:#25D366;color:#fff;border:0;border-radius:14px;font-size:17px;font-weight:800;margin-top:12px}
+.btn:disabled{background:#ccc}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>TECHOUSE SOLUTIONS</h1>
+<p>iPhone XR → 18 Pro Max</p>
+<p style="font-size:13px">WhatsApp: +27 60 185 6382 • Bloemfontein</p>
+</div>
+<div class="wrap">
+<div class="card">
+<label>1. CHOOSE IPHONE MODEL</label>
+<select id="model" onchange="updateOptions()">
+<option value="">-- Select Model --</option>
+<option>XR</option><option>XS</option><option>XS Max</option>
+<option>11</option><option>11 Pro</option><option>11 Pro Max</option>
+<option>12 mini</option><option>12</option><option>12 Pro</option><option>12 Pro Max</option>
+<option>13 mini</option><option>13</option><option>13 Pro</option><option>13 Pro Max</option>
+<option>14</option><option>14 Plus</option><option>14 Pro</option><option>14 Pro Max</option>
+<option>15</option><option>15 Plus</option><option>15 Pro</option><option>15 Pro Max</option>
+<option>16</option><option>16 Plus</option><option>16 Pro</option><option>16 Pro Max</option>
+<option>17</option><option>17 Pro</option><option>17 Pro Max</option>
+<option>18 Pro</option><option>18 Pro Max</option>
+</select>
+<label>2. CHOOSE COLOUR</label>
+<select id="colour"><option value="">-- Select Colour --</option></select>
+<label>3. CHOOSE STORAGE</label>
+<select id="storage"><option value="">-- Select Storage --</option></select>
+<div class="preview" id="preview">Select Model, Colour & Storage</div>
+<button class="btn" id="waBtn" disabled onclick="sendWA()">Order on WhatsApp</button>
+</div>
+</div>
+<script>
+const WHATSAPP_NUMBER = "27601856382";
+const data={"XR":{colours:["Black","White","Blue","Yellow","Coral","Red"],storage:["64GB","128GB","256GB"]},"XS":{colours:["Space Gray","Silver","Gold"],storage:["64GB","256GB","512GB"]},"11":{colours:["Black","Green","Yellow","Purple","Red","White"],storage:["64GB","128GB","256GB"]},"12":{colours:["Black","White","Blue","Green","Red","Purple"],storage:["64GB","128GB","256GB"]},"12 Pro":{colours:["Pacific Blue","Gold","Graphite","Silver"],storage:["128GB","256GB","512GB"]},"13":{colours:["Midnight","Starlight","Blue","Pink","Red","Green"],storage:["128GB","256GB","512GB"]},"13 Pro Max":{colours:["Graphite","Gold","Silver","Sierra Blue","Alpine Green"],storage:["128GB","256GB","512GB","1TB"]},"14 Pro Max":{colours:["Space Black","Silver","Gold","Deep Purple"],storage:["128GB","256GB","512GB","1TB"]},"15 Pro Max":{colours:["Black Titanium","White Titanium","Blue Titanium","Natural Titanium"],storage:["256GB","512GB","1TB"]},"16 Pro Max":{colours:["Black Titanium","White Titanium","Natural Titanium","Desert Titanium"],storage:["256GB","512GB","1TB"]},"17 Pro Max":{colours:["Silver","Cosmic Orange","Deep Blue"],storage:["256GB","512GB","1TB","2TB"]},"18 Pro Max":{colours:["Black","Silver","Glacier","Burgundy"],storage:["256GB","512GB","1TB","2TB"]}};
+function updateOptions(){const m=document.getElementById('model').value;const cSel=document.getElementById('colour');const sSel=document.getElementById('storage');cSel.innerHTML='<option>-- Select Colour --</option>';sSel.innerHTML='<option>-- Select Storage --</option>';let d=data[m]||data["14 Pro Max"];if(m in data)d=data[m];d.colours.forEach(c=>{let o=document.createElement('option');o.textContent=c;cSel.appendChild(o)});d.storage.forEach(s=>{let o=document.createElement('option');o.textContent=s;sSel.appendChild(o)});checkReady();}
+document.getElementById('colour').addEventListener('change',checkReady);document.getElementById('storage').addEventListener('change',checkReady);
+function checkReady(){const m=document.getElementById('model').value;const c=document.getElementById('colour').value;const s=document.getElementById('storage').value;const btn=document.getElementById('waBtn');const prev=document.getElementById('preview');if(m&&c&&s){prev.innerHTML="✅ Ready: <b>iPhone "+m+" • "+c+" • "+s+"</b>";btn.disabled=false;}else{prev.innerHTML="Select Model, Colour & Storage";btn.disabled=true;}}
+function sendWA(){const m=document.getElementById('model').value;const c=document.getElementById('colour').value;const s=document.getElementById('storage').value;const msg="Hi Techouse Solutions 👋%0A%0AI want to order:%0A📱 Model: iPhone "+m+"%0A🎨 Colour: "+c+"%0A💾 Storage: "+s+"%0A%0AIs it available? What is price?";window.open("https://wa.me/"+WHATSAPP_NUMBER+"?text="+msg,"_blank");}
+</script>
+</body>
+</html>
